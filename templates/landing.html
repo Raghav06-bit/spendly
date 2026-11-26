@@ -16,7 +16,7 @@
         </p>
         <div class="hero-actions">
             <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
-            <a href="#" class="btn-ghost">See how it works</a>
+            <a href="#" class="btn-ghost" id="seeHowItWorks">See how it works</a>
         </div>
         <div class="mock-card">
     <div class="mock-card-header">
@@ -69,5 +69,41 @@
         <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
     </div>
 </section>
+
+<div id="videoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div class="video-container">
+            <iframe id="youtubeVideo" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    var btn = document.getElementById('seeHowItWorks');
+    var modal = document.getElementById('videoModal');
+    var closeBtn = document.getElementsByClassName('close-button')[0];
+    var videoFrame = document.getElementById('youtubeVideo');
+
+    btn.onclick = function(e) {
+        e.preventDefault();
+        videoFrame.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+        modal.style.display = 'block';
+    };
+
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+        videoFrame.src = '';
+    };
+
+    window.onclick = function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            videoFrame.src = '';
+        }
+    };
+})();
+</script>
 
 {% endblock %}
