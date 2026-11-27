@@ -1,7 +1,7 @@
 # Spec: Registration
 
 ## Overview
-Implement user registration for Spendly so new users can create an account with a full name, email address, and password. This feature processes the registration form submit, validates input (checking for missing fields and existing email addresses), hashes the password securely using Werkzeug, inserts the new user into the database, logs the user in via Flask session, and redirects to the landing page with a confirmation flash message.
+Implement user registration for Spendly so new users can create an account with a full name, email address, and password.And display registration successfull on screen when registration is completed . This feature processes the registration form submit, validates input (checking for missing fields and existing email addresses), hashes the password securely using Werkzeug, inserts the new user into the database, logs the user in via Flask session, and redirects to the landing page with a confirmation flash message.
 
 ## Depends on
 - Step 01: Database Setup (`database/db.py`, `users` table)
