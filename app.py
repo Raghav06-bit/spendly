@@ -1,7 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 from database.db import get_db, init_db, seed_db
 
 app = Flask(__name__)
+app.secret_key = 'dev-secret-key-change-in-production'
 
 # Initialize database on startup
 with app.app_context():
@@ -18,8 +20,56 @@ def landing():
     return render_template("landing.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+
+        # Validate required fields
+        if not name or not email or not password:
+            return render_template("register.html", error="All fields are required.")
+
+        # Validate password length
+        if len(password) < 8:
+            return render_template(
+                "register.html",
+                error="Password must be at least 8 characters long.",
+            )
+
+        # Check if email already exists
+        conn = get_db()
+        try:
+            existing = conn.execute(
+                "SELECT id FROM users WHERE email = ?", (email,)
+            ).fetchone()
+
+            if existing:
+                conn.close()
+                return render_template(
+                    "register.html",
+                    error="Email address is already registered.",
+                )
+
+            # Insert new user with hashed password
+            password_hash = generate_password_hash(password)
+            cursor = conn.execute(
+                "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
+                (name, email, password_hash),
+            )
+            conn.commit()
+            user_id = cursor.lastrowid
+
+            # Log in via session
+            session["user_id"] = user_id
+            session["user_name"] = name
+
+            flash("Registration successful! Welcome to Spendly.")
+            return redirect(url_for("landing"))
+        finally:
+            conn.close()
+
     return render_template("register.html")
 
 
