@@ -36,3 +36,8 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# Project specific
+expense_tracker.db
+spendly.db
+.claude/plans/

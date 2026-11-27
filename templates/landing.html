@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Spendly — Track Every Rupee{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-badge">● Free to use · No credit card needed</div>
+        <h1 class="hero-title">
+            Track every rupee.<br>
+            <em style="color: var(--accent);">Know where it goes.</em>
+        </h1>
+        <p class="hero-subtitle">
+            Spendly helps you log expenses, spot patterns, and stay on budget — without the spreadsheet headache.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
+            <a href="#" class="btn-ghost" id="seeHowItWorks">See how it works</a>
+        </div>
+        <div class="mock-card">
+    <div class="mock-card-header">
+        <div><small class="ink-muted">This month</small><div class="big">₹18,240</div><small class="danger">+12% vs last</small></div>
+        <div><small class="ink-muted">Budget left</small><div class="big">₹6,760</div><small class="accent">43% remaining</small></div>
+        <div><small class="ink-muted">Transactions</small><div class="big">34</div><small class="ink-muted">this month</small></div>
+    </div>
+            <div class="mock-bars">
+                <div class="mock-bar-row">
+                    <span class="mock-cat">Food</span>
+                    <div class="mock-bar-track"><div class="mock-bar mock-bar-2" style="width: 75%;"></div></div>
+                </div>
+                <div class="mock-bar-row">
+                    <span class="mock-cat">Travel</span>
+                    <div class="mock-bar-track"><div class="mock-bar blue-bar" style="width: 50%;"></div></div>
+                </div>
+                <div class="mock-bar-row">
+                    <span class="mock-cat">Bills</span>
+                    <div class="mock-bar-track"><div class="mock-bar mock-bar-3" style="width: 40%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="features-inner">
+        <div class="feature-card">
+            <div class="feature-icon">₹</div>
+            <h3 class="feature-title">Log expenses instantly</h3>
+            <p class="feature-body">Add any expense in seconds. Category, amount, date, description — all in one simple form.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">◎</div>
+            <h3 class="feature-title">Understand your patterns</h3>
+            <p class="feature-body">See exactly where your money goes with category breakdowns and monthly summaries.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">◷</div>
+            <h3 class="feature-title">Filter by time period</h3>
+            <p class="feature-body">View your spending for any date range — last week, last month, or a custom period.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2 class="cta-title">Ready to take control?</h2>
+        <p class="cta-body">Join thousands of people who track their expenses with Spendly.</p>
+        <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
+    </div>
+</section>
+
+<div id="videoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div class="video-container">
+            <iframe id="youtubeVideo" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    var btn = document.getElementById('seeHowItWorks');
+    var modal = document.getElementById('videoModal');
+    var closeBtn = document.getElementsByClassName('close-button')[0];
+    var videoFrame = document.getElementById('youtubeVideo');
+
+    btn.onclick = function(e) {
+        e.preventDefault();
+        videoFrame.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+        modal.style.display = 'block';
+    };
+
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+        videoFrame.src = '';
+    };
+
+    window.onclick = function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            videoFrame.src = '';
+        }
+    };
+})();
+</script>
+
+{% endblock %}
